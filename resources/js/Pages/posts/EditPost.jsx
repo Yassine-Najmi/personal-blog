@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import UpdatePostForm from "./Partials/UpdatePostForm";
-export default function Posts({ auth, post }) {
+import PostForm from "./Partials/PostForm";
+export default function Posts({ auth, post, categories, tags }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -17,7 +17,12 @@ export default function Posts({ auth, post }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <UpdatePostForm />
+                            <PostForm
+                                post={post}
+                                categories={categories}
+                                tags={tags}
+                                action="Update"
+                            />
                         </div>
                     </div>
                 </div>

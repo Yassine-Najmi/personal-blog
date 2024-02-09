@@ -22,7 +22,9 @@ export default forwardRef(function SelectInput(
             ref={input}
         >
             {options.map((option) => (
-                <option key={option}>{option}</option>
+                <option value={option.id} key={option.id}>
+                    {option.name}
+                </option>
             ))}
         </select>
     );

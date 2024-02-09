@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -24,7 +26,12 @@ class PostController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('posts/CreatePost');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return Inertia::render('posts/CreatePost', [
+            'categories' => $categories,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -32,10 +39,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // $post = new Post();
-        // $post->title = $request->title;
-        // $post->content = $request->content;
-        // $post->save();
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->image = $request->image;
+        $post->category_id = $request->category_id;
+        // $post->tags_id = $request->tags_id;
+        $post->user_id = auth()->user()->id;
+        $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -51,15 +64,35 @@ class PostController extends Controller
      */
     public function edit(Post $post): Response
     {
-        return Inertia::render('posts/EditPost', ['post' => $post]);
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return Inertia::render('posts/EditPost', [
+            'post' => $post,
+            'categories' => $categories,
+            'tags' => $tags
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Post $post, Request $request)
     {
-        //
+
+        // dd($request->all());
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            "image" => $request->image,
+            "category" => $request->category,
+            "tags" => $request->tags
+
+        ]);
+
+        // $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     /**

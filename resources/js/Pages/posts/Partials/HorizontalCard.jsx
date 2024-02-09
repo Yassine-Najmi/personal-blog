@@ -1,5 +1,4 @@
 export default function HorizontalCard({ post }) {
-    console.log(post);
     return (
         <div className="w-full lg:flex mb-8">
             <div
