@@ -22,11 +22,10 @@ export default function PostForm({
         errors,
         recentlySuccessful,
     } = useForm({
-        title: post?.title,
-        content: post?.content,
-        image: post?.image,
-        category: post?.category,
-        tag: post?.tag,
+        title: post?.title || "",
+        content: post?.content || "",
+        image: post?.image || "",
+        category: post?.category || "",
     });
     const submit = (e) => {
         e.preventDefault();
@@ -42,7 +41,6 @@ export default function PostForm({
         }
     };
 
-    // console.log(errors);
     return (
         <section className={className}>
             <header>
@@ -101,8 +99,8 @@ export default function PostForm({
                         id="category"
                         className="mt-1 block w-full"
                         options={categories}
-                        value={data?.category}
-                        onChange={(value) => setData("category", value)}
+                        // value={data?.category}
+                        onChange={(e) => setData("category", e.target.value)}
                     />
                     {errors?.category && (
                         <InputError
@@ -112,19 +110,19 @@ export default function PostForm({
                     )}
                 </div>
 
-                <div>
+                {/* <div>
                     <InputLabel htmlFor="tags" value="Tags" />
                     <SelectInput
                         id="tags"
                         className="mt-1 block w-full"
                         options={tags}
                         value={data?.tag}
-                        onChange={(e) => setData("tag", e.target.value)}
+                        onChange={(value) => setData("tag", value)}
                     />
                     {errors?.tag && (
                         <InputError className="mt-2" message={errors?.tag} />
                     )}
-                </div>
+                </div> */}
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton className="py-2 px-4" disabled={processing}>

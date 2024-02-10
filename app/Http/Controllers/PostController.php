@@ -43,7 +43,9 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->image = $request->image;
-        $post->category_id = $request->category_id;
+        $post->category_id = $request->category;
+        // $post->category_id = 1;
+
         // $post->tags_id = $request->tags_id;
         $post->user_id = auth()->user()->id;
         $post->save();
@@ -85,12 +87,11 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             "image" => $request->image,
-            "category" => $request->category,
-            "tags" => $request->tags
+            "category_id" => $request->category,
+            // "tags" => $request->tags
 
         ]);
 
-        // $post->save();
 
         return redirect()->route('posts.index');
     }
