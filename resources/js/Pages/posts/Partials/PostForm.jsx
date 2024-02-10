@@ -1,3 +1,4 @@
+import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SelectInput from "@/Components/SelectInput";
@@ -5,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import TextareaInput from "@/Components/TextareaInput";
 import { Transition } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function PostForm({
     post,
@@ -13,11 +15,14 @@ export default function PostForm({
     className = "",
     action,
 }) {
+    const [imagePreview, setImagePreview] = useState(null);
+
     const {
         data,
         setData,
         post: handlePost,
         patch: handlePatch,
+        progress,
         processing,
         errors,
         recentlySuccessful,
@@ -38,6 +43,19 @@ export default function PostForm({
             handlePatch(route("posts.update", post.id), preserveScroll);
         } else {
             handlePost(route("posts.store"), preserveScroll);
+        }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setData("image", file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -81,13 +99,40 @@ export default function PostForm({
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="image" value="Image" />
-                    <TextInput
-                        id="image"
-                        className="mt-1 block w-full"
-                        value={data?.image}
-                        onChange={(e) => setData("image", e.target.value)}
+                    <InputLabel
+                        htmlFor="image"
+                        className="mb-1"
+                        value="Image"
                     />
+                    <div className="flex ">
+                        <div>
+                            <input
+                                id="image"
+                                className="-full text-black text-sm bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded"
+                                type="file"
+                                onChange={handleImageChange}
+                            />
+                            <p
+                                className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+                                id="file_input_help"
+                            >
+                                jpeg,png,jpg,gif,svg (max:2048)
+                            </p>
+                        </div>
+                        {imagePreview && (
+                            <img
+                                src={imagePreview}
+                                className="ml-4 w-24 h-24"
+                                alt={data?.title}
+                            />
+                        )}
+                    </div>
+
+                    {progress && (
+                        <progress value={progress.percentage} max="100">
+                            {progress.percentage}%
+                        </progress>
+                    )}
                     {errors?.image && (
                         <InputError className="mt-2" message={errors?.image} />
                     )}

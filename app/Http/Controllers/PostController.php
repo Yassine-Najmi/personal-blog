@@ -39,15 +39,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category' => 'required',
+        ]);
+
+
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
-        $post->image = $request->image;
         $post->category_id = $request->category;
-        // $post->category_id = 1;
-
-        // $post->tags_id = $request->tags_id;
         $post->user_id = auth()->user()->id;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('images', $imageName, 'public');
+            $post->image = $imagePath;
+        }
+
         $post->save();
 
         return redirect()->route('posts.index');
@@ -81,6 +93,12 @@ class PostController extends Controller
      */
     public function update(Post $post, Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category' => 'required',
+        ]);
 
         // dd($request->all());
         $post->update([
@@ -99,8 +117,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

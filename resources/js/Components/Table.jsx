@@ -1,7 +1,21 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import PrimaryButton from "./PrimaryButton";
 
-export default function Table({ items, columns, primary, action }) {
+export default function Table({
+    element,
+    elements,
+    items,
+    columns,
+    primary,
+    action,
+}) {
+    const deleteItem = (id) => {
+        router.delete(route(`${elements}.destroy`, id), {
+            onBefore: () =>
+                confirm(`Are you sure you want to delete this ${element} ?`),
+        });
+    };
+
     return (
         <>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
@@ -12,16 +26,16 @@ export default function Table({ items, columns, primary, action }) {
                     >
                         <Link
                             className="text-white px-4 py-2"
-                            href={route("posts.create")}
+                            href={route(`${elements}.create`)}
                         >
-                            Create Post
+                            Create {element}
                         </Link>
                     </PrimaryButton>
                 </div>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 ">
                                 {primary}
                             </th>
                             {columns.map((column) => (
@@ -33,7 +47,11 @@ export default function Table({ items, columns, primary, action }) {
                                     {column}
                                 </th>
                             ))}
-                            <th scope="col" className="px-6 py-3">
+                            <th
+                                scope="col"
+                                colSpan={2}
+                                className="px-6 py-3 text-center"
+                            >
                                 Action
                             </th>
                         </tr>
@@ -54,9 +72,9 @@ export default function Table({ items, columns, primary, action }) {
                                     <td key={column} className="px-6 py-4">
                                         {column === "Image" ? (
                                             <img
-                                                src={item[column]}
+                                                src={`/storage/${item[column]}`}
                                                 alt="Image"
-                                                className="h-16 w-auto rounded-full"
+                                                className="w-14 h-12 rounded-full"
                                             />
                                         ) : (
                                             item[column]
@@ -66,14 +84,22 @@ export default function Table({ items, columns, primary, action }) {
                                 <td className="px-6 py-4">
                                     <Link
                                         href={route(
-                                            "posts.edit",
+                                            `${elements}.edit`,
                                             item.id,
                                             "edit"
                                         )}
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
-                                        {action}
+                                        {action[0]}
                                     </Link>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <button
+                                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                                        onClick={() => deleteItem(item.id)}
+                                    >
+                                        {action?.[1]}
+                                    </button>
                                 </td>
                             </tr>
                         ))}
