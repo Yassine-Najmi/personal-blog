@@ -1,3 +1,5 @@
+import { Link } from "@inertiajs/react";
+
 export default function HorizontalCard({ post }) {
     return (
         <div className="w-full lg:flex mb-8">
@@ -15,12 +17,12 @@ export default function HorizontalCard({ post }) {
                     </div>
                     <p className="text-grey-darker text-base">
                         {post.content}
-                        <a
+                        <Link
                             href={route("posts.show", post.id)}
                             className="cursor-pointer text-blue-600 hover:underline"
                         >
                             ...Read more
-                        </a>
+                        </Link>
                     </p>
                 </div>
                 <div className="flex flex-col justify-center gap-1">

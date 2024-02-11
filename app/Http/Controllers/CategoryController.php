@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('categories/CreateCategory');
     }
 
     /**
@@ -30,7 +30,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $category = new Category();
+        $category->name = $request->name;
+
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -44,17 +53,30 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return Inertia::render('categories/EditCategory', [
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Category $category, Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        $category->save();
+
+
+
+        return redirect()->route('categories.index');
     }
 
     /**

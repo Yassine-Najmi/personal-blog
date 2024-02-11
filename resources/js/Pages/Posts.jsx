@@ -1,8 +1,17 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import HorizontalCard from "./posts/Partials/HorizontalCard";
+import { useEffect } from "react";
 
 export default function Posts({ auth, posts }) {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            router.reload({ only: ["posts"] });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const formattedPosts = posts.map((post) => {
         // Format the date
         const lastUpdated = new Date(post.updated_at).toLocaleString();

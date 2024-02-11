@@ -144,7 +144,7 @@ export default function PostForm({
                         id="category"
                         className="mt-1 block w-full"
                         options={categories}
-                        // value={data?.category}
+                        element="category"
                         onChange={(e) => setData("category", e.target.value)}
                     />
                     {errors?.category && (
