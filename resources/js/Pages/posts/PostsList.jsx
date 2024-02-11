@@ -50,7 +50,7 @@ export default function PostsList({ auth, posts }) {
                             items={modifiedPosts}
                             columns={columns}
                             primary={"ID"}
-                            action={["Edit", "Delete"]}
+                            action={["show", "edit", "delete"]}
                         />
                     </div>
                 </div>

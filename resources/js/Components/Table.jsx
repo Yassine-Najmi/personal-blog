@@ -35,14 +35,14 @@ export default function Table({
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3 ">
+                            <th scope="col" className="px-6 py-3">
                                 {primary}
                             </th>
                             {columns.map((column) => (
                                 <th
                                     key={column}
                                     scope="col"
-                                    className="px-6 py-3"
+                                    className="px-6 py-3 text-center"
                                 >
                                     {column}
                                 </th>
@@ -50,7 +50,7 @@ export default function Table({
                             <th
                                 scope="col"
                                 colSpan={2}
-                                className="px-6 py-3 text-center"
+                                className="px-2 py-3 text-center w-1/12"
                             >
                                 Action
                             </th>
@@ -64,41 +64,63 @@ export default function Table({
                             >
                                 <th
                                     scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >
                                     #{item.id}
                                 </th>
                                 {columns.map((column) => (
-                                    <td key={column} className="px-6 py-4">
+                                    <td
+                                        key={column}
+                                        className="px-6 py-4 text-center"
+                                    >
                                         {column === "Image" ? (
                                             <img
                                                 src={`/storage/${item[column]}`}
                                                 alt="Image"
-                                                className="w-14 h-12 rounded-full"
+                                                className="w-14 h-12 rounded-full "
                                             />
                                         ) : (
                                             item[column]
                                         )}
                                     </td>
                                 ))}
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 flex justify-end space-x-1 items-center gap-6">
+                                    {element === "post" &&
+                                        action.length >= 3 && (
+                                            <Link
+                                                href={route(
+                                                    `${elements}.${
+                                                        action[
+                                                            action.length - 3
+                                                        ]
+                                                    }`,
+                                                    item.id,
+                                                    action[action.length - 3]
+                                                )}
+                                                className="font-medium text-green-600 dark:text-green-500 hover:underline"
+                                            >
+                                                {action[action.length - 3]}
+                                            </Link>
+                                        )}
+
                                     <Link
                                         href={route(
-                                            `${elements}.edit`,
+                                            `${elements}.${
+                                                action[action.length - 2]
+                                            }`,
                                             item.id,
-                                            "edit"
+                                            action[action.length - 2]
                                         )}
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
-                                        {action[0]}
+                                        {action[action.length - 2]}
                                     </Link>
-                                </td>
-                                <td className="px-6 py-4">
+
                                     <button
                                         className="font-medium text-red-600 dark:text-red-500 hover:underline"
                                         onClick={() => deleteItem(item.id)}
                                     >
-                                        {action?.[1]}
+                                        {action?.[action.length - 1]}
                                     </button>
                                 </td>
                             </tr>

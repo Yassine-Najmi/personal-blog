@@ -68,9 +68,11 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        return Inertia::render('posts/ShowPost', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -120,6 +122,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('posts.index');
+        return redirect()->back();
     }
 }

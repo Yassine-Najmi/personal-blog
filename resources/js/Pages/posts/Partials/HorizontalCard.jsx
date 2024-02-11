@@ -15,9 +15,12 @@ export default function HorizontalCard({ post }) {
                     </div>
                     <p className="text-grey-darker text-base">
                         {post.content}
-                        <span className="cursor-pointer text-blue-600 hover:underline">
+                        <a
+                            href={route("posts.show", post.id)}
+                            className="cursor-pointer text-blue-600 hover:underline"
+                        >
                             ...Read more
-                        </span>
+                        </a>
                     </p>
                 </div>
                 <div className="flex flex-col justify-center gap-1">

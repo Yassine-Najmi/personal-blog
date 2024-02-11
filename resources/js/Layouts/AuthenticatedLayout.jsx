@@ -76,7 +76,7 @@ export default function Authenticated({ user, header, children }) {
                                             Posts
                                         </Dropdown.Link>
                                         <Dropdown.Link
-                                        // href={route("")}
+                                            href={route("categories.index")}
                                         >
                                             Categories
                                         </Dropdown.Link>
