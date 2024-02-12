@@ -59,4 +59,9 @@ class Post extends Model
     {
         return $this->tags->pluck('name');
     }
+
+    static public function navigateAllPosts()
+    {
+        return Post::orderBy("id", "desc")->paginate(5);
+    }
 }

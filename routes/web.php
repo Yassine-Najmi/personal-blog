@@ -30,9 +30,9 @@ Route::get('/', function () {
 });
 
 Route::get('/', function () {
-    $posts = Post::orderBy("id", "desc")->get();
+    $posts = Post::navigateAllPosts();
     return Inertia::render('Posts', ['posts' => $posts]);
-})->middleware(['auth', 'verified'])->name('posts');
+})->name('posts');
 
 Route::get('/about', function () {
     return Inertia::render('About');

@@ -1,9 +1,17 @@
+import PrevButton from "@/Components/PrevButton";
+import { Head, Link } from "@inertiajs/react";
+
 export default function ShowPost({ auth, post }) {
     const lastUpdated = new Date(post.updated_at).toLocaleString();
-    console.log(post);
 
     return (
         <div className="max-w-screen-lg mx-auto p-5 sm:p-10 md:p-16">
+            <Head title={post.title} />
+            <div>
+                <Link href={route("posts")}>
+                    <PrevButton>Back Home</PrevButton>
+                </Link>
+            </div>
             <div className="mb-10 rounded overflow-hidden flex flex-col mx-auto">
                 <a
                     href="#"
@@ -15,7 +23,7 @@ export default function ShowPost({ auth, post }) {
                 <div className="relative">
                     <span>
                         <img
-                            className="w-full h-96"
+                            className="w-full h-96 rounded-md"
                             src={"/storage/" + post.image}
                             alt={post.title}
                         />
@@ -23,10 +31,10 @@ export default function ShowPost({ auth, post }) {
                     <span
                         className="hidden z-10 text-xs absolute bottom-0
                             left-0 bg-indigo-600 px-6 m-2 py-2 text-white hover:bg-white
-                            hover:text-indigo-600 transition duration-500 ease-in-out
+                            hover:text-indigo-600 transition duration-500 ease-in-out rounded-md
                             sm:flex items-center"
                     >
-                        <span className="text-lg">|</span>&nbsp;&nbsp;
+                        <span className="text-lg ">|</span>&nbsp;&nbsp;
                         <span>{post.categoryName}</span>
                     </span>
                     {/* <a

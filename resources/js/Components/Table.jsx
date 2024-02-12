@@ -35,7 +35,7 @@ export default function Table({
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-3 py-2 text-center">
                                 {primary}
                             </th>
                             {columns.map((column) => (
@@ -64,20 +64,20 @@ export default function Table({
                             >
                                 <th
                                     scope="row"
-                                    className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    className="px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >
                                     #{item.id}
                                 </th>
                                 {columns.map((column) => (
                                     <td
                                         key={column}
-                                        className="px-6 py-4 text-center"
+                                        className="px-3 py-2 text-center"
                                     >
                                         {column === "Image" ? (
                                             <img
                                                 src={`/storage/${item[column]}`}
                                                 alt="Image"
-                                                className="w-14 h-12 rounded-full "
+                                                className="w-24 h-12 rounded-lg "
                                             />
                                         ) : (
                                             item[column]

@@ -2,6 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import HorizontalCard from "./posts/Partials/HorizontalCard";
 import { useEffect } from "react";
+import { Link } from "@inertiajs/react";
+import PrevButton from "@/Components/PrevButton";
+import NextButton from "@/Components/NextButton";
 
 export default function Posts({ auth, posts }) {
     useEffect(() => {
@@ -12,7 +15,7 @@ export default function Posts({ auth, posts }) {
         return () => clearInterval(interval);
     }, []);
 
-    const formattedPosts = posts.map((post) => {
+    const formattedPosts = posts.data.map((post) => {
         // Format the date
         const lastUpdated = new Date(post.updated_at).toLocaleString();
         const createdAt = new Date(post.created_at).toLocaleString();
@@ -20,7 +23,7 @@ export default function Posts({ auth, posts }) {
         return {
             id: post.id,
             title: post.title,
-            content: post.content.split(" ").slice(0, 25).join(" "),
+            content: post.content.split(" ").slice(0, 70).join(" "),
             image: post.image,
             category: post.categoryName,
             tag: post.tagName,
@@ -48,6 +51,18 @@ export default function Posts({ auth, posts }) {
                             {formattedPosts.map((post) => (
                                 <HorizontalCard key={post.id} post={post} />
                             ))}
+                        </div>
+                        <div className="pagination justify-center flex space-x-72 mb-12">
+                            {posts.prev_page_url && (
+                                <Link href={posts.prev_page_url}>
+                                    <PrevButton>Previous</PrevButton>
+                                </Link>
+                            )}
+                            {posts.next_page_url && (
+                                <Link href={posts.next_page_url}>
+                                    <NextButton>Next</NextButton>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>

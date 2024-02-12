@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy("id", "desc")->get();
+        $posts = Post::navigateAllPosts();
 
         return Inertia::render('posts/PostsList', ['posts' => $posts]);
     }
