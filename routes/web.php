@@ -34,6 +34,7 @@ Route::get('/', function () {
     return Inertia::render('Posts', ['posts' => $posts]);
 })->name('posts');
 
+
 Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
@@ -49,5 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get("posts/{post}", [PostController::class, 'show'])->name('posts.show');
+
 
 require __DIR__ . '/auth.php';

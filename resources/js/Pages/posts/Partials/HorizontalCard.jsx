@@ -25,12 +25,19 @@ export default function HorizontalCard({ post }) {
                         </Link>
                     </p>
                 </div>
-                <div className="flex flex-col justify-center gap-1">
-                    <div>{post.category}</div>
-                    <div></div>
+                <div className="flex flex-col justify-center gap-4">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 w-fit ">
+                        {post.category}
+                    </span>
+
                     <div className="text-sm">
-                        <p className="text-black leading-none">
-                            Written By {post.WrittenBy}
+                        <p className="text-black leading-none mb-2">
+                            <>
+                                Written By{" "}
+                                <span className="border-b-2 border-blue-400">
+                                    {post.WrittenBy}
+                                </span>
+                            </>
                         </p>
                         <p className="text-grey-dark">
                             last update: {post["last updated"]}

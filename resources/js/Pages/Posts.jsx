@@ -10,7 +10,7 @@ export default function Posts({ auth, posts }) {
     useEffect(() => {
         const interval = setInterval(() => {
             router.reload({ only: ["posts"] });
-        }, 1000);
+        }, 60000);
 
         return () => clearInterval(interval);
     }, []);
@@ -38,7 +38,7 @@ export default function Posts({ auth, posts }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Posts
+                    Latest Posts
                 </h2>
             }
         >
