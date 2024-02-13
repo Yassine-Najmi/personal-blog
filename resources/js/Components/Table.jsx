@@ -64,7 +64,7 @@ export default function Table({
                             >
                                 <th
                                     scope="row"
-                                    className="px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    className="px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
                                 >
                                     #{item.id}
                                 </th>

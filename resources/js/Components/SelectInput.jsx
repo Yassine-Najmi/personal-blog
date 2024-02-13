@@ -1,9 +1,20 @@
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 export default forwardRef(function SelectInput(
-    { className = "", isFocused = false, element, options = [], ...props },
+    {
+        className = "",
+        isFocused = false,
+        element,
+        categoryId,
+        options = [],
+        ...props
+    },
     ref
 ) {
+    const [selectedElement, setSelectedElement] = useState(
+        categoryId ? categoryId : 0
+    );
+
     const input = ref ? ref : useRef();
 
     useEffect(() => {
@@ -20,12 +31,14 @@ export default forwardRef(function SelectInput(
                 className
             }
             ref={input}
+            value={selectedElement}
+            onChange={(e) => setSelectedElement(e.target.value)}
         >
-            <option selected={true} disabled={true}>
+            <option disabled={true} value={0}>
                 Select a {element}
             </option>
             {options.map((option) => (
-                <option value={option.id} key={option.id}>
+                <option key={option.id} value={option.id}>
                     {option.name}
                 </option>
             ))}

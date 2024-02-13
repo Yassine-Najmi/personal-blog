@@ -98,9 +98,9 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category' => 'required',
         ]);
+        // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         // dd($request->all());
         $post->update([

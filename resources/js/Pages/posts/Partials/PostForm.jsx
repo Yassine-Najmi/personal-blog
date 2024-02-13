@@ -143,8 +143,10 @@ export default function PostForm({
                     <SelectInput
                         id="category"
                         className="mt-1 block w-full"
+                        categoryId={post?.category_id}
                         options={categories}
                         element="category"
+                        value={data?.category}
                         onChange={(e) => setData("category", e.target.value)}
                     />
                     {errors?.category && (
