@@ -30,7 +30,7 @@ export default function PostForm({
         title: post?.title || "",
         content: post?.content || "",
         image: post?.image || "",
-        category: post?.category || "",
+        category: post?.category_id || null,
     });
     const submit = (e) => {
         e.preventDefault();
@@ -58,6 +58,8 @@ export default function PostForm({
             reader.readAsDataURL(file);
         }
     };
+
+    console.log(post);
 
     return (
         <section className={className}>

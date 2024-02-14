@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 
 export default forwardRef(function SelectInput(
     {
@@ -11,10 +11,6 @@ export default forwardRef(function SelectInput(
     },
     ref
 ) {
-    const [selectedElement, setSelectedElement] = useState(
-        categoryId ? categoryId : 0
-    );
-
     const input = ref ? ref : useRef();
 
     useEffect(() => {
@@ -31,8 +27,7 @@ export default forwardRef(function SelectInput(
                 className
             }
             ref={input}
-            value={selectedElement}
-            onChange={(e) => setSelectedElement(e.target.value)}
+            defaultValue={0}
         >
             <option disabled={true} value={0}>
                 Select a {element}
