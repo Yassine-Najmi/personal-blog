@@ -26,7 +26,7 @@ export default function Posts({ auth, posts }) {
             content: post.content.split(" ").slice(0, 70).join(" "),
             image: post.image,
             category: post.categoryName,
-            tag: post.tagName,
+            tags: post.tagName,
             WrittenBy: post.writtenBy,
             "last updated": lastUpdated,
             "Created at": createdAt,

@@ -3,6 +3,9 @@ import { Link } from "@inertiajs/react";
 export default function HorizontalCard({ post }) {
     return (
         <div className="w-full lg:flex mb-8">
+            <span className=" position absolute bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5  dark:bg-blue-900 dark:text-blue-300 w-fit ">
+                {post.category}
+            </span>
             <div
                 className="h-80 lg:h-auto lg:w-96 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
                 style={{
@@ -26,8 +29,15 @@ export default function HorizontalCard({ post }) {
                     </p>
                 </div>
                 <div className="flex flex-col justify-center gap-4">
-                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 w-fit ">
-                        {post.category}
+                    <span className="flex gap-2">
+                        {post.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 w-fit"
+                            >
+                                {tag}
+                            </span>
+                        ))}
                     </span>
 
                     <div className="text-sm">

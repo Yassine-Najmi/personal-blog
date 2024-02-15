@@ -39,11 +39,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $tags = array_map(function ($item) {
+            return $item['value'];
+        }, $request->tags);
+
+
         $request->validate([
             'title' => 'required',
             'content' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category' => 'required',
+            'tags' => 'required',
         ]);
 
 
@@ -53,6 +59,8 @@ class PostController extends Controller
         $post->category_id = $request->category;
         $post->user_id = auth()->user()->id;
 
+        // dd($post->id);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
@@ -61,6 +69,17 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        $tagIds = [];
+        if ($tags) {
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $tagIds[] = $tag->id;
+            }
+            $post->tags()->attach($tagIds);
+        }
+
+
 
         return redirect()->route('posts.index');
     }
@@ -95,22 +114,49 @@ class PostController extends Controller
      */
     public function update(Post $post, Request $request)
     {
+        $tags = [];
+        if ($request->tags) {
+            $tags = array_map(function ($item) {
+                return $item['value'];
+            }, $request->tags);
+        }
+
         $request->validate([
             'title' => 'required',
             'content' => 'required',
             'category' => 'required',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'tags' => 'required',
         ]);
-        // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         // dd($request->all());
+
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $imageName = time() . '_' . $image->getClientOriginalName();
+        //     $imagePath = $image->storeAs('images', $imageName, 'public');
+        //     $post->image = $imagePath;
+        // }
+
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
             "image" => $request->image,
             "category_id" => $request->category,
-            // "tags" => $request->tags
-
         ]);
+
+
+
+        $post->tags()->detach();
+
+        $tagIds = [];
+        if ($tags) {
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $tagIds[] = $tag->id;
+            }
+            $post->tags()->attach($tagIds);
+        }
 
 
         return redirect()->route('posts.index');

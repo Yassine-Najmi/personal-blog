@@ -7,6 +7,8 @@ import TextareaInput from "@/Components/TextareaInput";
 import { Transition } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
+// import Select from "react-select/dist/declarations/src/Select";
+import Select from "react-select";
 
 export default function PostForm({
     post,
@@ -30,7 +32,8 @@ export default function PostForm({
         title: post?.title || "",
         content: post?.content || "",
         image: post?.image || "",
-        category: post?.category_id || null,
+        category: post?.category_id || "",
+        tags: post?.tag_id || [],
     });
     const submit = (e) => {
         e.preventDefault();
@@ -59,7 +62,10 @@ export default function PostForm({
         }
     };
 
-    console.log(post);
+    const selectTags = tags.map((tag) => ({
+        value: tag.name.toLowerCase(),
+        label: tag.name,
+    }));
 
     return (
         <section className={className}>
@@ -147,8 +153,7 @@ export default function PostForm({
                         className="mt-1 block w-full"
                         categoryId={post?.category_id}
                         options={categories}
-                        element="category"
-                        value={data?.category}
+                        element="Category"
                         onChange={(e) => setData("category", e.target.value)}
                     />
                     {errors?.category && (
@@ -159,19 +164,24 @@ export default function PostForm({
                     )}
                 </div>
 
-                {/* <div>
+                <div>
                     <InputLabel htmlFor="tags" value="Tags" />
-                    <SelectInput
+                    <Select
                         id="tags"
-                        className="mt-1 block w-full"
-                        options={tags}
-                        value={data?.tag}
-                        onChange={(value) => setData("tag", value)}
-                    />
+                        options={selectTags}
+                        isMulti
+                        name="tags"
+                        className="react-select-container"
+                        placeholder="Select tags"
+                        closeMenuOnSelect={false}
+                        classNamePrefix="select"
+                        value={data?.tags}
+                        onChange={(value) => setData("tags", value)}
+                    ></Select>
                     {errors?.tag && (
                         <InputError className="mt-2" message={errors?.tag} />
                     )}
-                </div> */}
+                </div>
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton className="py-2 px-4" disabled={processing}>

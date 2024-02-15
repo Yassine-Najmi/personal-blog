@@ -30,7 +30,7 @@ export default forwardRef(function SelectInput(
             defaultValue={0}
         >
             <option disabled={true} value={0}>
-                Select a {element}
+                Select {element}
             </option>
             {options.map((option) => (
                 <option key={option.id} value={option.id}>

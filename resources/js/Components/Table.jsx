@@ -73,15 +73,27 @@ export default function Table({
                                         key={column}
                                         className="px-3 py-2 text-center"
                                     >
-                                        {column === "Image" ? (
+                                        {column === "Tags" &&
+                                            item[column].map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                                                >
+                                                    {tag}
+                                                    <br />
+                                                </span>
+                                            ))}
+
+                                        {column === "Image" && (
                                             <img
                                                 src={`/storage/${item[column]}`}
                                                 alt="Image"
                                                 className="w-24 h-12 rounded-lg "
                                             />
-                                        ) : (
-                                            item[column]
                                         )}
+                                        {column !== "Tags" &&
+                                            column !== "Image" &&
+                                            item[column]}
                                     </td>
                                 ))}
                                 <td className="px-6 py-4 flex justify-end space-x-1 items-center gap-6">
