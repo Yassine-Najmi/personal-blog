@@ -29,7 +29,7 @@ export default function HorizontalCard({ post }) {
                     </p>
                 </div>
                 <div className="flex flex-col justify-center gap-4">
-                    <span className="flex gap-2">
+                    <div className="flex gap-2">
                         {post.tags.map((tag) => (
                             <span
                                 key={tag}
@@ -38,7 +38,7 @@ export default function HorizontalCard({ post }) {
                                 {tag}
                             </span>
                         ))}
-                    </span>
+                    </div>
 
                     <div className="text-sm">
                         <p className="text-black leading-none mb-2">

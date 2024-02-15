@@ -4,6 +4,8 @@ import { Head, Link } from "@inertiajs/react";
 export default function ShowPost({ auth, post }) {
     const lastUpdated = new Date(post.updated_at).toLocaleString();
 
+    console.log(post);
+
     return (
         <div className="max-w-screen-lg mx-auto p-5 sm:p-10 md:p-16">
             <Head title={post.title} />
@@ -37,13 +39,6 @@ export default function ShowPost({ auth, post }) {
                         <span className="text-lg ">|</span>&nbsp;&nbsp;
                         <span>{post.categoryName}</span>
                     </span>
-                    {/* <a
-                        href="#!"
-                        className="hidden z-10 text-xs absolute bottom-0 right-0 bg-indigo-600 px-6 m-2 py-2 text-white hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out sm:flex items-center"
-                    >
-                        <span className="text-lg">|</span>&nbsp;&nbsp;
-                        <span>Read more</span>
-                    </a> */}
                 </div>
                 <p className="text-gray-700 py-5 text-base leading-8">
                     {post.content}
@@ -101,6 +96,16 @@ export default function ShowPost({ auth, post }) {
                         </svg>
                         <span className="ml-1">{post.writtenBy}</span>
                     </a>
+                    <div className="ml-5 flex gap-2">
+                        {post.tagName.map((tag) => (
+                            <span
+                                key={tag}
+                                className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 w-fit"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
                 </div>
                 <hr />
             </div>
