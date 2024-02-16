@@ -5,9 +5,8 @@ import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import TextareaInput from "@/Components/TextareaInput";
 import { Transition } from "@headlessui/react";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { useState } from "react";
-// import Select from "react-select/dist/declarations/src/Select";
 import Select from "react-select";
 
 export default function PostForm({
@@ -22,8 +21,8 @@ export default function PostForm({
     const {
         data,
         setData,
-        post: handlePost,
-        patch: handlePatch,
+        // post: handlePost,
+        // put: handleput,
         progress,
         processing,
         errors,
@@ -33,19 +32,25 @@ export default function PostForm({
         content: post?.content || "",
         image: post?.image || "",
         category: post?.category_id || "",
-        tags: post?.tag_id || [],
+        tags:
+            post?.tags.map((tag) => ({
+                value: tag.name.toLowerCase(),
+                label: tag.name,
+            })) || [],
     });
     const submit = (e) => {
         e.preventDefault();
 
-        const preserveScroll = {
-            preserveScroll: true,
-        };
-
         if (action === "Update") {
-            handlePatch(route("posts.update", post.id), preserveScroll);
+            router.post(route("posts.update", post.id), {
+                _method: "put",
+                ...data,
+            });
         } else {
-            handlePost(route("posts.store"), preserveScroll);
+            router.post(route("posts.store"), {
+                _method: "put",
+                ...data,
+            });
         }
     };
 
@@ -66,6 +71,8 @@ export default function PostForm({
         value: tag.name.toLowerCase(),
         label: tag.name,
     }));
+
+    console.log(data);
 
     return (
         <section className={className}>

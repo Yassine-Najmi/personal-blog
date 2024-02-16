@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -114,6 +115,8 @@ class PostController extends Controller
      */
     public function update(Post $post, Request $request)
     {
+
+
         $tags = [];
         if ($request->tags) {
             $tags = array_map(function ($item) {
@@ -125,26 +128,29 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'category' => 'required',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => $request->hasFile('image') ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : "nullable",
             'tags' => 'required',
         ]);
 
-        // dd($request->all());
 
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file('image');
-        //     $imageName = time() . '_' . $image->getClientOriginalName();
-        //     $imagePath = $image->storeAs('images', $imageName, 'public');
-        //     $post->image = $imagePath;
-        // }
 
-        $post->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            "image" => $request->image,
-            "category_id" => $request->category,
-        ]);
+        if ($request->hasFile('image')) {
 
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('images', $imageName, 'public');
+
+
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+            $post->image = $imagePath;
+        }
+
+        $post->title = $request->input('title', $post->title);
+        $post->content = $request->input('content', $post->content);
+        $post->category_id = $request->input('category', $post->category_id);
+        $post->save();
 
 
         $post->tags()->detach();
