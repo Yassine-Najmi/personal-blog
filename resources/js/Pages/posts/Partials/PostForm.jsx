@@ -48,7 +48,7 @@ export default function PostForm({
             });
         } else {
             router.post(route("posts.store"), {
-                _method: "put",
+                _method: "post",
                 ...data,
             });
         }

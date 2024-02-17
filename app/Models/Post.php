@@ -62,6 +62,6 @@ class Post extends Model
 
     static public function navigateAllPosts()
     {
-        return Post::orderBy("id", "desc")->paginate(5);
+        return Post::orderBy("id", "desc")->paginate(10);
     }
 }
