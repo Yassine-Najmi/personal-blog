@@ -50,7 +50,7 @@ export default function HorizontalCard({ post }) {
                             </>
                         </p>
                         <p className="text-grey-dark">
-                            last update: {post["last updated"]}
+                            Last update : {post["last updated"]}
                         </p>
                     </div>
                 </div>
